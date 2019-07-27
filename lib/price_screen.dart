@@ -69,32 +69,23 @@ class _PriceScreenState extends State<PriceScreen> {
             alignment: Alignment.center,
             padding: EdgeInsets.only(bottom: 30.0),
             color: Colors.lightBlue,
-            child: CupertinoPicker(
-              children: cupertino(),
-              itemExtent: 30,
-              onSelectedItemChanged: (value){
-                 setState(() {
-                    SelectedCurency = currenciesList[value];
-                  print(SelectedCurency);
-                 });
-              },
-
-            )
-             /*DropdownButton<String>(
+            child:
+             DropdownButton<String>(
               hint: Text('pick'),
               items: getitems(),
               value: SelectedCurency,
-              icon: Icon(Icons.playlist_add_check,color: Colors.white,),
               iconSize: 50,
               onChanged: (value){
             setState(() {
               SelectedCurency = value;
             });
               },
-            )*/
+            )
           ),
         ],
       ),
     );
   }
 }
+
+

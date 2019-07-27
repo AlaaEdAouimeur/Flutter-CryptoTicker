@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'coin_data.dart';
 class PriceScreen extends StatefulWidget {
@@ -6,8 +7,33 @@ class PriceScreen extends StatefulWidget {
 }
 
 class _PriceScreenState extends State<PriceScreen> {
+ String SelectedCurency = 'USD';
+  List<DropdownMenuItem<String>> getitems(){
+    int i;
+      List<DropdownMenuItem<String>> dropdownItems = [
+     
+      ];
+    for (String currency in currenciesList) {
+      var newItem = DropdownMenuItem(
+        child: Text(currency),
+        value: currency,
+      );
+      dropdownItems.add(newItem);
+    }
+    return dropdownItems;
+  }
+ cupertino(){
+  List<Widget> texts = [];
+   for (String currency in currenciesList){
+     Widget text = Text(currency);
+     texts
+     .add(text);
+   }
+   return texts;
+}
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -43,13 +69,29 @@ class _PriceScreenState extends State<PriceScreen> {
             alignment: Alignment.center,
             padding: EdgeInsets.only(bottom: 30.0),
             color: Colors.lightBlue,
-            child: DropdownButton<String>(
+            child: CupertinoPicker(
+              children: cupertino(),
+              itemExtent: 30,
+              onSelectedItemChanged: (value){
+                 setState(() {
+                    SelectedCurency = currenciesList[value];
+                  print(SelectedCurency);
+                 });
+              },
+
+            )
+             /*DropdownButton<String>(
               hint: Text('pick'),
-              items: currenciesList,
-              value: 'Alaa',
+              items: getitems(),
+              value: SelectedCurency,
               icon: Icon(Icons.playlist_add_check,color: Colors.white,),
               iconSize: 50,
-            )
+              onChanged: (value){
+            setState(() {
+              SelectedCurency = value;
+            });
+              },
+            )*/
           ),
         ],
       ),

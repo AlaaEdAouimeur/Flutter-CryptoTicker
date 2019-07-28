@@ -10,9 +10,11 @@ class PriceScreen extends StatefulWidget {
 }
 
 class _PriceScreenState extends State<PriceScreen> {
+  Color clr = Color(0xff414345);
   String SelectedCurency = 'USD';
   CoinData coinData;
   List<Map> Prices;
+  bool isloading = false;
   List<DropdownMenuItem<String>> getitems() {
     List<DropdownMenuItem<String>> dropdownItems = [];
     for (String currency in currenciesList) {
@@ -24,6 +26,18 @@ class _PriceScreenState extends State<PriceScreen> {
     }
     return dropdownItems;
   }
+  Widget getarow(double changes,Color color , Icon icon){
+    return Row(
+      children: <Widget>[
+        icon,
+        Text('${changes.toStringAsFixed(1)}%',
+        style: TextStyle(color: color),
+        )
+      ],
+    );
+  }
+
+
 
   cupertino() {
     List<Widget> texts = [];
@@ -35,19 +49,29 @@ class _PriceScreenState extends State<PriceScreen> {
   }
 
   Future update() async {
-    Prices = null;
+    isloading = true;
+    
     List _Prices = await coinData.Getdata(SelectedCurency);
     setState(() {
       Prices = _Prices;
+      isloading = false;
     });
+    
   }
 
   void getdata() async {
+    
+    isloading = true;
+
     Prices = await coinData.Getdata(SelectedCurency);
+     setState(() {
+       isloading = false;
+     });
   }
 
   @override
   void initState() {
+print(Prices);
     super.initState();
     coinData = new CoinData();
     getdata();
@@ -64,6 +88,18 @@ class _PriceScreenState extends State<PriceScreen> {
   }
 
   Widget priceitem(Map Prices, String Cypto) {
+   Color arrowcolor;
+   Icon arrowicon;
+    if (Prices['changes']['percent']['hour'] < 0){
+      arrowcolor = Colors.red;
+    arrowicon= Icon(Icons.arrow_drop_down);
+
+    }
+    else {
+      arrowcolor = Colors.green;
+    arrowicon= Icon(Icons.arrow_drop_up);
+    }
+    
     String png = Cypto.toLowerCase();
     print(png);
     return Container(
@@ -79,23 +115,29 @@ class _PriceScreenState extends State<PriceScreen> {
                  'images/$png.png'
                ),
               ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(0.0, 18.0, 18.0, 0),
-            child: Card(
-              color: Colors.lightBlueAccent,
+          Expanded(
+                      child: Card(
+              color: clr,
               elevation: 5.0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
-                child: Text(
-                  '1 $Cypto = ${Prices['last']} $SelectedCurency',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.white,
-                  ),
+                padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
+                child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    
+                    Text(
+                      '1 $Cypto = ${Prices['last']} $SelectedCurency',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                    getarow(Prices['changes']['percent']['hour'], arrowcolor, arrowicon),
+                  ],
                 ),
               ),          
             ),
@@ -107,7 +149,7 @@ class _PriceScreenState extends State<PriceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Prices == null
+    return isloading 
 
           ? 
           Stack(
@@ -116,50 +158,24 @@ class _PriceScreenState extends State<PriceScreen> {
             appBar: AppBar(
               centerTitle: true,
               title: Text('🤑 Coin Ticker'),
+              backgroundColor: clr,
             ),
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: 3,
-                    itemBuilder: (BuildContext context, i) {
-                      return null;
-                    },
-                  ),
-                ),
-                Container(
-                    height: 150.0,
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.only(bottom: 30.0),
-                    color: Colors.lightBlue,
-                    child: DropdownButton<String>(
-                      hint: Text('pick'),
-                      items: getitems(),
-                      value: SelectedCurency,
-                      iconSize: 50,
-                      onChanged: (value) {
-                        setState(() {
-                        //  SelectedCurency = value;
-                        //  update();
-                        });
-                      },
-                    )),
-              ],
-            ),
-          ),
-          Center(
+            body: Center(
             child: Container(color: Colors.transparent,
             child: spinkit.SpinKitChasingDots(color: Colors.blue,),),
-          )
+          ),
+          ),
+         
             ]
           )
           
+
+
         : Scaffold(
             appBar: AppBar(
               centerTitle: true,
               title: Text('🤑 Coin Ticker'),
+              backgroundColor: clr,
             ),
             body: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -174,10 +190,10 @@ class _PriceScreenState extends State<PriceScreen> {
                   ),
                 ),
                 Container(
-                    height: 150.0,
+                    height: 100.0,
                     alignment: Alignment.center,
-                    padding: EdgeInsets.only(bottom: 30.0),
-                    color: Colors.lightBlue,
+                    padding: EdgeInsets.only(bottom: 20.0),
+                    color: clr,
                     child: DropdownButton<String>(
                       hint: Text('pick'),
                       items: getitems(),

@@ -29,6 +29,12 @@ const List<String> cryptoList = [
   'BTC',
   'ETH',
   'LTC',
+  'BCH',
+ 
+  
+  'XMR',
+  'XRP',
+  'ZEC'
 ];
 const bitcoinAverageURL =
     'https://apiv2.bitcoinaverage.com/indices/global/ticker';
@@ -40,7 +46,6 @@ class CoinData {
        String requestURL = '$bitcoinAverageURL/$crypto$selectedCurrency';
        print(requestURL);
         http.Response response = await http.get(requestURL);
-
         Map Price = jsonDecode(response.body);
         print(Price);
         Prices.add(Price);

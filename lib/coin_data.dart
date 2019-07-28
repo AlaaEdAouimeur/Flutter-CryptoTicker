@@ -30,11 +30,23 @@ const List<String> cryptoList = [
   'ETH',
   'LTC',
 ];
-
+const bitcoinAverageURL =
+    'https://apiv2.bitcoinaverage.com/indices/global/ticker';
+// 
 class CoinData {
-  Future Getdata(){
-    var apikey;
-    String url = '';
-    http.Response response = http.get(url)
+  Future<List<Map>> Getdata(String selectedCurrency) async {
+    List<Map> Prices = [];
+    for(String crypto in cryptoList){
+       String requestURL = '$bitcoinAverageURL/$crypto$selectedCurrency';
+       print(requestURL);
+        http.Response response = await http.get(requestURL);
+
+        Map Price = jsonDecode(response.body);
+        print(Price);
+        Prices.add(Price);
+    }
+    print('DONE');
+   return Prices;
+   
   }
 }

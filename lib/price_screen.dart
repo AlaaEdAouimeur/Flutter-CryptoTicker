@@ -60,13 +60,14 @@ class _PriceScreenState extends State<PriceScreen> {
   }
 
   void getdata() async {
-    
+
     isloading = true;
 
     Prices = await coinData.Getdata(SelectedCurency);
      setState(() {
        isloading = false;
      });
+     print(Prices);
   }
 
   @override

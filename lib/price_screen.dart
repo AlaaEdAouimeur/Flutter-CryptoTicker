@@ -163,7 +163,7 @@ print(Prices);
             ),
             body: Center(
             child: Container(color: Colors.transparent,
-            child: spinkit.SpinKitChasingDots(color: Colors.blue,),),
+            child: spinkit.SpinKitChasingDots(color: clr,),),
           ),
           ),
          

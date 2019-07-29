@@ -1,12 +1,19 @@
 
 
 
-# Coin Ticker 🤑
+# Coin Ticker 🤑 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
+                 <img src="https://img.shields.io/badge/made%20with-Flutter-blue.svg?style=for-the-badge" alt="made with Flutter">
+
  An App That Fetches Crypto Prices From [This API](https://apiv2.bitcoinaverage.com)
 
 ## Screenhoots
-![Loading Screen](imqges/screen1.jpg)
-![Prices Screen](imqges/screen1.jpg)
+<p float="center">
+  <img src="images/Screen1.jpg" width="250" />
+  <img src="images/Screen2.jpg" width="250" />
+ 
+  
+</p>
+
 ## My Goal
 
 My objective of this App is to learn about using Cupertino and Material Widgets in parallel and providing a different user interface depending on the platform.

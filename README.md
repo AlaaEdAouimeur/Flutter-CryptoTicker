@@ -1,8 +1,8 @@
 
 
 
-# Coin Ticker 🤑 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
-                 <img src="https://img.shields.io/badge/made%20with-Flutter-blue.svg?style=for-the-badge" alt="made with Flutter">
+# Coin Ticker 🤑 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) <img src="https://img.shields.io/badge/made%20with-Flutter-blue.svg?style=for-the-badge" alt="made with Flutter">
+                 
 
  An App That Fetches Crypto Prices From [This API](https://apiv2.bitcoinaverage.com)
 
